@@ -1,0 +1,13 @@
+# Python 캐시 파일
+__pycache__/
+*.pyc
+
+# 환경 변수 파일
+.env
+
+# 모델 파일
+models/
+
+# 로그 파일
+*.log
+

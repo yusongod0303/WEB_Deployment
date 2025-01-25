@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보 수정</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f6f6;
+            color: #F72798;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #FFFFFF;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(22, 0, 59, 0.1);
+        overflow: hidden;
+        border: 2px solid #F72798; /* 테두리 추가 */
+    }
+
+    header {
+        background-color: #FFFFFF;
+        color: #F72798;
+        padding: 30px;
+        text-align: center;
+    }
+
+    header img {
+        width: 300px;
+        }
+
+    header nav a {
+        color:  #F72798;
+        text-decoration: none;
+        margin: 0 10px;
+        position: relative;
+        top: 30px;
+    }
+
+    header nav a:hover {
+        text-decoration: underline;
+    }
+
+    .edit-info {
+        padding: 20px;
+    }
+
+    .edit-info h2 {
+        color: #16003B;
+        border-bottom: 2px solid #F72798;
+        padding-bottom: 5px;
+    }
+
+    .category-button {
+        padding: 10px 20px;
+        margin: 5px;
+        border: 1px solid #F72798;
+        background-color: #FFFFFF;
+        color: #16003B;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .category-button.selected {
+        background-color: #F72798;
+        color: #FFFFFF;
+    }
+
+    button[type="submit"] {
+        display: block;
+        background-color: #F72798;
+        color: #FFFFFF;
+        padding: 10px 20px;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        margin: 20px auto;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #16003B;
+        color: #F72798;
+    }
+
+    footer {
+        background-color: none;
+        color:#F72798;
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 100px;
+    }
+
+    footer p {
+        margin: 0;
+        padding: 5px 0;
+    }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/" class="logo2">
+                <img src="/static/img/006.png" alt="Image">
+
+
+
+            <nav>
+                <a href="/myinfo">뒤로가기</a>
+            </nav>
+        </header>
+        
+        <section class="edit-info">
+            <h2>선호 카테고리 수정</h2>
+            <form action="/edit" method="POST" id="editForm">
+                <div class="category-selection">
+                    <h3>선호 카테고리</h3>
+                    {% for category in categories %}
+                        <button type="button" class="category-button {% if category in user.preferences %}selected{% endif %}" 
+                                data-category="{{ category }}">
+                            {{ category }}
+                        </button>
+                    {% endfor %}
+                </div>
+                
+                <input type="hidden" name="selected_categories" id="selectedCategories">
+                
+                <button type="submit">수정 완료</button>
+            </form>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 사랑의 홈쇼핑. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const categoryButtons = document.querySelectorAll('.category-button');
+        const selectedCategoriesInput = document.getElementById('selectedCategories');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('selected');
+            });
+        });
+
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            const selectedCategories = [];
+            categoryButtons.forEach(button => {
+                if (button.classList.contains('selected')) {
+                    selectedCategories.push(button.getAttribute('data-category'));
+                }
+            });
+            
+            selectedCategoriesInput.value = selectedCategories.join(',');
+
+            if (selectedCategories.length === 0) {
+                alert('선호 카테고리를 선택해주세요.');
+                event.preventDefault();
+            } else {
+                alert('수정이 완료되었습니다!');
+                setTimeout(() => {
+                    window.location.href = '/main';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>로그인</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f6f6;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+    
+            .login-container {
+                background: #FFFFFF;
+                border: 1px solid #F72798;  /* 테두리 색상과 두께 */
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(247, 39, 152, 0.1);
+                width: 100%;
+                max-width: 400px;
+                padding: 30px;
+                text-align: center;
+            }
+    
+            h2 {
+                color: #F72798;
+                margin-bottom: 20px;
+            }
+    
+            .input-field {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 4px;
+                border: 1px solid #F72798;
+                box-sizing: border-box;
+            }
+    
+            .input-field:focus {
+                border-color: #16003B;
+                outline: none;
+            }
+    
+            .btn {
+                width: 100%;
+                padding: 12px;
+                background-color: #16003B;
+                color: #F72798;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+    
+            .btn:hover {
+                background-color: #F72798;
+                color: #16003B;
+            }
+    
+            .footer {
+                margin-top: 20px;
+                font-size: 14px;
+                color: #16003B;
+            }
+    
+            .footer a {
+                text-decoration: none;
+                color: #F72798;
+            }
+    
+            .footer a:hover {
+                text-decoration: underline;
+            }
+    
+            .error-message {
+                color: #F72798;
+                font-size: 14px;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+<body>
+    <div class="login-container">
+        <h2>로그인</h2>
+        <form action="/login" method="post">
+            <input type="text" id="username" name="username" class="input-field" placeholder="아이디" required><br>
+            <input type="password" id="password" name="password" class="input-field" placeholder="비밀번호" required><br>
+            <button type="submit" class="btn">로그인</button>
+        </form>
+
+        <!-- 에러 메시지 표시 -->
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+
+        <div class="footer">
+            <p>회원가입<a href="/signup">   여기를 클릭해주세요</a></p>
+        </div>
+        <div class="footer">
+            <p>비밀번호 찾기<a href="#">    여기를 클릭해주세요</a></p>
+        </div>
+    </div>
+</body>
+</html>

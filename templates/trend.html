@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사랑의 홈쇼핑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f6f6;
+            color: #16003B;
+            margin: 0;
+            padding: 0;
+        }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 1001;
+        }
+
+        .logo img {
+            width: 150px;
+            height: auto;
+        }
+
+        .logo2 {
+            position: absolute;
+            top: 50px;
+            left: 700px;
+            right: 100px;
+            z-index: 1001;
+        }
+
+        .logo2 img {
+            width: 500px;
+            height: auto;
+        }
+
+        .header {
+            background-color: transparent;
+            padding: 15px 0;
+            position: absolute;
+            width: 100%;
+            top: 150px;
+            z-index: 1000;
+            border-top: 1px solid #F72798;
+            border-bottom: 1px solid #F72798;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .menu-bar {
+            display: flex;
+            justify-content: flex-start;
+            flex-grow: 1;
+            margin-left: -100px;
+        }
+
+        .menu-bar a {
+            color: #F72798;
+            text-decoration: none;
+            margin: 0 30px;
+            font-size: 18px;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-bar a:hover {
+            color: #16003B;
+            border-bottom: 2px solid #16003B;
+        }
+
+        .search-bar {
+            position: relative;
+            display: inline-block;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            padding-right: 40px;
+            border: 2px solid #F72798;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 400px;
+        }
+
+        .search-button {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .search-button i {
+            color: #F72798;
+            font-size: 18px;
+        }
+
+        .user-actions {
+            display: flex;
+            position: absolute;
+            right: -200px;
+        }
+
+        .btn {
+            background-color: #F72798;
+            color: #FFFFFF;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .btn:hover {
+            background-color: #FFFFFF;
+            color: #F72798;
+        }
+
+        .content {
+            margin-top: 230px;
+            padding: 20px;
+        }
+
+        #trend-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #trend-table-container{
+            width: 48%;
+            margin-left: 30px;
+        }
+
+        #trend-chart-container{
+            width: 48%;
+            margin-top: 70px;
+            margin-right: 30px;
+        }
+        
+        /* 링크의 기본 색상을 검은색으로 설정 */
+        #trend-table-container a {
+            color: #F72798; 
+            text-decoration: none; /* 밑줄 제거 (선택 사항) */
+        }
+
+        /* 링크에 마우스를 올렸을 때의 색상 변경 */
+        #trend-table-container a:hover {
+            color: gray; /* 회색으로 설정 (선택 사항) */
+            text-decoration: underline; /* 밑줄 추가 (선택 사항) */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #16003B;
+        }
+
+        .category-btn, .price-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #F72798;
+            color: #F72798;
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover, .price-btn:hover, .category-btn.selected, .price-btn.selected {
+            background-color: #F72798;
+            color: #FFFFFF;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+
+        .filter-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%;   
+        }
+
+        .filter-container div {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .filter-container a {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .category-btn, .price-btn {
+            margin: 5px;
+        }
+
+        .content {
+            margin-top: 280px; /* 230px에서 증가 */
+            padding: 20px;
+        }
+
+        .filter-container {
+            margin-top: 250px; /* 추가 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;   
+        }
+
+        /* 상품 리스트를 가로로 나열 */
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;  /* 여러 줄로 나누기 */
+            gap: 20px;  /* 카드 사이의 간격 */
+            list-style-type: none;  /* 리스트 스타일 제거 */
+            padding: 0;
+            margin-top: 20px;  /* 제목과 카드 사이의 간격 */
+            justify-content: center;
+        }
+
+        /* 각 카드 스타일 */
+        .product-card {
+            width: 200px;  /* 카드의 너비 */
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        /* 카드 내 모든 텍스트에 밑줄 제거 */
+        .product-card * {
+            text-decoration: none;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card .product-image {
+            text-align: center;
+        }
+
+        .product-card .product-info {
+            margin-top: 10px;
+        }
+
+        .product-card .product-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            text-align: center;
+        }
+
+        .product-card .product-price {
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+        <a href="/" class="logo">
+            <img src="/static/img/003.png" alt="Image">
+
+            
+        <a href="/" class="logo2">
+            <img src="/static/img/006.png" alt="Image">
+
+    </a>
+    <header class="header">
+        <div class="container">
+            <nav class="menu-bar">
+                <a href="/trend">트렌드</a>
+                <a href="/schedule">편성표</a>
+                <a href="/favorites">즐겨찾기</a>
+            </nav>
+
+            <div class="search-bar">
+                <form action="/search" method="get">
+                    <input type="text" name="keyword" placeholder="상품명을 입력하세요" required>
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="user-actions">
+                {% if logged_in_user %}
+                    <a href="/myinfo" class="btn">마이페이지</a>
+                    <a href="/logout" class="btn">로그아웃</a>
+                {% else %}
+                    <a href="/login" class="btn">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="filter-container sticky-filter">
+        <form action="/trend" method="get" id="filter-form">
+            <div>
+                <a>카테고리</a>
+                {% for category in unique_categories %}
+                    <button type="button" class="category-btn {% if category == request.query_params.get('category') %} selected {% endif %}" onclick="selectOption('{{ category }}', 'category')">
+                        {{ category }}
+                    </button>
+                {% endfor %}
+            </div>
+            <div>
+                <a>가격</a>
+                <button type="button" class="price-btn {% if selected_price_range == 'under_10000' %} selected {% endif %}" onclick="selectOption('under_10000', 'price')">1만원 이하</button>
+                <button type="button" class="price-btn {% if selected_price_range == '10000_30000' %} selected {% endif %}" onclick="selectOption('10000_30000', 'price')">1~3만원</button>
+                <button type="button" class="price-btn {% if selected_price_range == '30000_50000' %} selected {% endif %}" onclick="selectOption('30000_50000', 'price')">3~5만원</button>
+                <button type="button" class="price-btn {% if selected_price_range == '50000_100000' %} selected {% endif %}" onclick="selectOption('50000_100000', 'price')">5~10만원</button>
+                <button type="button" class="price-btn {% if selected_price_range == '100000_200000' %} selected {% endif %}" onclick="selectOption('100000_200000', 'price')">10~20만원</button>
+                <button type="button" class="price-btn {% if selected_price_range == 'above_200000' %} selected {% endif %}" onclick="selectOption('above_200000', 'price')">20만원 이상</button>
+            </div>
+            <input type="hidden" name="category" id="category-input" value="{{ request.query_params.get('category') }}">
+            <input type="hidden" name="price_range" id="price-input" value="{{ selected_price_range }}">
+        </form>
+
+        <div id="trend-container">
+            <div id="trend-table-container">
+                <h2>트렌드</h2>
+                <table>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Keyword</th>
+                        <th>Category</th>
+                    </tr>
+                    {% for trend in filtered_trends %}
+                    <tr>
+                        <td>{{ trend.rank }}</td>
+                        <td><a href="javascript:void(0);" onclick="showProductsByKeyword('{{ trend.Keyword }}')">{{ trend.Keyword }}</a></td>
+                        <td>{{ trend.categories }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div id="trend-chart-container">
+                <canvas id="trend-chart"></canvas>
+            </div>
+        </div>
+
+        <div id="product-container">
+            <div><h2>가격대별 상품</h2></div>
+                <ul class="product-list">
+                    {% for product in product_links %}
+                    <li class="product-card">
+                        <a href="{{ product.url }}" target="_blank">
+                            <div class="product-image">
+                                <img src="{{ product.image_url }}" alt="{{ product.title }}" width="200" height="200">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">{{ product.title }}</div>
+                                <div class="product-price">{{ product.price | format }} 원</div>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+        </div>
+    </div>
+
+    <script>
+        let currentChart = null;
+
+        function selectOption(option, type) {
+            const categoryInput = document.getElementById('category-input');
+            const priceInput = document.getElementById('price-input');
+
+            if (type === 'category') {
+                categoryInput.value = categoryInput.value === option ? '' : option;
+            } else if (type === 'price') {
+                priceInput.value = priceInput.value === option ? '' : option;
+            }
+
+            document.getElementById('filter-form').submit();
+        }
+
+        function showProductsByKeyword(keyword) {
+            fetchTrendData(keyword);
+            const priceRange = document.getElementById('price-input').value;
+            const category = document.getElementById('category-input').value;
+            window.location.href = "/trend?category=" + category + "&price_range=" + priceRange + "&keyword=" + keyword;
+        }
+
+        window.addEventListener('load', function() {
+            const keyword = new URLSearchParams(window.location.search).get('keyword');
+            if (keyword) {
+                fetchTrendData(keyword);
+            }
+        });
+
+        async function fetchTrendData(keyword) {
+            const response = await fetch(`/trend-data?keyword=${keyword}`);
+            const data = await response.json();
+
+            if (!data || data.length === 0) {
+                alert('No trend data found for this keyword.');
+                return;
+            }
+
+            const labels = data.map(item => item.date);
+            const ratios = data.map(item => item.ratio);
+
+            if (currentChart) {
+                currentChart.data.labels = labels;
+                currentChart.data.datasets[0].data = ratios;
+                currentChart.data.datasets[0].label = `${keyword} 트렌드`;
+                currentChart.update();
+            } else {
+                const ctx = document.getElementById('trend-chart').getContext('2d');
+                currentChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: `${keyword} 트렌드`,
+                            data: ratios,
+                            borderColor: '#F72798',
+                            fill: false,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.raw.toFixed(2) + '%';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: '날짜'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: '비율 (%)'
+                                },
+                                min: 0,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            }
+            document.getElementById('trend-chart-container').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

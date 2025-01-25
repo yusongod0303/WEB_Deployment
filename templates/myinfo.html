@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 확인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f6f6;
+            color: #F72798;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(247, 39, 152, 0.1);
+            padding: 20px;
+            width: 300px;
+            border: 2px solid #F72798; /* 테두리 추가 */
+        }
+
+        header {
+            background-color: #16003B;
+            color: #F72798;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin: -20px -20px 20px -20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #16003B;
+        }
+
+        input[type="password"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #F72798;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #16003B;
+            color: #F72798;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #F72798;
+            color: #16003B;
+        }
+
+        p {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>비밀번호 확인</h1>
+        </header>
+        
+        <form action="/myinfo" method="post">
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">확인</button>
+        </form>
+        {% if error_message %}
+            <p style="color:#F72798;">{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

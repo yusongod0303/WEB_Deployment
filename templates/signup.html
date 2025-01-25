@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFFFFF;
+            color: #16003B;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .signup-container {
+            background: #FFFFFF;
+            border: 1px solid #F72798;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(247, 39, 152, 0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #F72798;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #F72798;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            border-color: #16003B;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #16003B;
+            color: #F72798;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #F72798;
+            color: #FFFFFF;
+        }
+
+        .category-container {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .category-container button {
+            background-color: #F72798;
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-container button:hover,
+        .category-container button.selected {
+            background-color: #16003B;
+            color: #F72798;
+        }
+
+        .error-message {
+            color: #F72798;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            color: #16003B;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="form-left">
+            <h2>회원가입</h2>
+            <form action="/signup" method="POST">
+
+                <input type="text" id="name" name="name" class="input-field" placeholder="이름" required><br>
+
+                <input type="text" id="phone" name="phone" class="input-field" placeholder="전화번호" required><br>
+
+                <input type="text" id="nickname" name="nickname" class="input-field" placeholder="닉네임" required>
+                <button type="button" onclick="checkNickname()">닉네임 중복 확인</button>
+                <span id="nickname-error" class="error-message"></span>
+                <span id="nickname-success" class="success-message"></span><br>
+                
+                <input type="text" id="username" name="username" class="input-field" placeholder="아이디" required>
+                <button type="button" onclick="checkUsername()">아이디 중복 확인</button>
+                <span id="username-error" class="error-message"></span>
+                <span id="username-success" class="success-message"></span><br>
+                
+                <input type="password" id="password" name="password" class="input-field" placeholder="비밀번호" required><br>
+                <input type="password" id="password_confirm" name="confirm_password" class="input-field" placeholder="비밀번호 확인" required><br>
+                
+                <input type="email" id="email" name="email" class="input-field" placeholder="이메일" required>
+                <button type="button" onclick="checkEmail()">이메일 중복 확인</button>
+                <span id="email-error" class="error-message"></span>
+                <span id="email-success" class="success-message"></span><br>
+    
+                <h3>생년월일</h3>
+                <input type="date" id="birthday" name="birthday" class="input-field" required><br>
+    
+                <div class="gender-section">
+                    <h3>성별</h3>
+                    <label><input type="radio" name="gender" value="남성" required> 남성</label>
+                    <label><input type="radio" name="gender" value="여성" required> 여성</label>
+                </div>
+        </div>
+    
+        <div class="category-section">
+            <h3>선호 카테고리</h3>
+            <div class="category-container">
+                <button type="button" onclick="toggleCategory(this)">패션의류</button>
+                <button type="button" onclick="toggleCategory(this)">패션잡화</button>
+                <button type="button" onclick="toggleCategory(this)">화장품/미용</button>
+                <button type="button" onclick="toggleCategory(this)">디지털/가전</button>
+                <button type="button" onclick="toggleCategory(this)">가구/인테리어</button>
+                <button type="button" onclick="toggleCategory(this)">출산/육아</button>
+                <button type="button" onclick="toggleCategory(this)">식품</button>
+                <button type="button" onclick="toggleCategory(this)">스포츠/레저</button>
+                <button type="button" onclick="toggleCategory(this)">생활/건강</button>
+                <button type="button" onclick="toggleCategory(this)">여가/생활편의</button>
+            </div>
+        </div>
+        <input type="hidden" name="selected_categories" id="selected_categories" value="">
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="submit" class="btn">확인</button>
+        </div>
+        </form>
+    </div>
+
+    <script>
+        function toggleCategory(button) {
+            button.classList.toggle('selected');
+            updateSelectedCategories();
+        }
+    
+        function updateSelectedCategories() {
+            const selectedCategories = [];
+            const buttons = document.querySelectorAll('.category-container button.selected');
+            buttons.forEach(button => {
+                selectedCategories.push(button.textContent.trim());
+            });
+            document.getElementById('selected_categories').value = selectedCategories.join(',');  // 콤마로 구분하여 저장
+        }
+    
+        // 닉네임 중복 확인 함수
+        function checkNickname() {
+            const nickname = document.getElementById('nickname').value;
+            fetch('/check_nickname', {
+                method: 'POST',  // POST 방식으로 변경
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',  // 폼 데이터 전송 헤더
+                },
+                body: new URLSearchParams({ nickname })  // Form 데이터로 보내기
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "error") {
+                    document.getElementById('nickname-error').textContent = '이미 존재하는 닉네임입니다.';
+                    document.getElementById('nickname-success').textContent = '';
+                } else {
+                    document.getElementById('nickname-error').textContent = '';
+                    document.getElementById('nickname-success').textContent = '사용 가능한 닉네임입니다.';
+                }
+            });
+        }
+    
+        // 아이디 중복 확인 함수
+        function checkUsername() {
+            const username = document.getElementById('username').value;
+            fetch('/check_username', {
+                method: 'POST',  // POST 방식으로 변경
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',  // 폼 데이터 전송 헤더
+                },
+                body: new URLSearchParams({ username })  // Form 데이터로 보내기
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "error") {
+                    document.getElementById('username-error').textContent = '이미 존재하는 아이디입니다.';
+                    document.getElementById('username-success').textContent = '';
+                } else {
+                    document.getElementById('username-error').textContent = '';
+                    document.getElementById('username-success').textContent = '사용 가능한 아이디입니다.';
+                }
+            });
+        }
+    
+        // 이메일 중복 확인 함수
+        function checkEmail() {
+            const email = document.getElementById('email').value;
+            fetch('/check_email', {
+                method: 'POST',  // POST 방식으로 변경
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',  // 폼 데이터 전송 헤더
+                },
+                body: new URLSearchParams({ email })  // Form 데이터로 보내기
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "error") {
+                    document.getElementById('email-error').textContent = '이미 존재하는 이메일입니다.';
+                    document.getElementById('email-success').textContent = '';
+                } else {
+                    document.getElementById('email-error').textContent = '';
+                    document.getElementById('email-success').textContent = '사용 가능한 이메일입니다.';
+                }
+            });
+        }
+    
+    
+        function validateForm(event) {
+        // 폼 제출 전에 중복 여부 확인
+            const nicknameError = document.getElementById('nickname-error').textContent;
+            const usernameError = document.getElementById('username-error').textContent;
+            const emailError = document.getElementById('email-error').textContent;
+    
+            if (nicknameError || usernameError || emailError) {
+                event.preventDefault();  // 제출 방지
+                alert("중복된 정보가 있습니다. 확인 후 다시 시도해 주세요.");
+            }
+        }
+    document.querySelector('form').addEventListener('submit', validateForm);
+    </script>
+</body>
+</html>

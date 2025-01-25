@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f6f6;
+            color: #16003B;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .logo2 img {
+            width: 300px;
+            height: auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(247, 39, 152, 0.1);
+            overflow: hidden;
+            border: 2px solid #F72798; /* 테두리 추가 */
+        }
+
+        header {
+            background-color: #f3ebf2;
+            color:  #F72798;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header nav {
+            margin-top: 15px;
+        }
+
+        header nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #16003B;
+        }
+
+        .user-info {
+            padding: 30px;
+        }
+
+        .user-info h2 {
+            color:#16003B;
+            border-bottom: 2px solid #F72798;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-details p {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-details strong {
+            color: #16003B;
+            width: 120px;
+            display: inline-block;
+        }
+
+        .user-details i {
+            color: #F72798;
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .user-details ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .user-details ul li {
+            color: #16003B;
+            margin: 5px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .user-details ul li:before {
+            content: '\f0c8';
+            font-family: 'Font Awesome 5 Free';
+            position: absolute;
+            left: 0;
+            color: #F72798;
+        }
+
+        .edit-button {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .edit-button a {
+            display: inline-block;
+            background-color: #F72798;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .edit-button a:hover {
+            background-color: #16003B;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(247, 39, 152, 0.2);
+        }
+
+        footer {
+            background-color: none;
+            color: #F72798;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>내 정보</h1>
+            <nav>
+                <a href="/">홈</a>
+            </nav>
+        </header>
+        
+        <section class="user-info">
+            <h2>사용자 정보</h2>
+            <div class="user-details">
+                <p><strong>아이디:</strong> {{ user.username }}</p>
+                <p><strong>닉네임:</strong> {{ user.nickname }}</p>
+                <p><strong>이름:</strong> {{ user.name }}</p>
+                <p><strong>전화번호:</strong> {{ user.phone }}</p>
+                <p><strong>이메일:</strong> {{ user.email }}</p>
+                <p><strong>생일:</strong> {{ user.birthday }}</p>
+                <p><strong>성별:</strong> {{ user.gender }}</p>
+                <p><strong>선호 카테고리:</strong></p>
+                <ul>
+                    {% for category in user.preferences %}
+                        <li>{{ category }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- 정보 수정 버튼 -->
+            <div class="edit-button">
+                <a href="/edit">정보 수정</a>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 사랑의 홈쇼핑. All rights reserved.</p>
+    </footer>
+</body>
+</html>
