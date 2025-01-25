@@ -207,8 +207,8 @@ async def logout():
 
 # 네이버 트렌드 API를 호출하여 데이터 가져오는 함수
 def get_trend_data_from_naver(keyword: str):
-    client_id = "qhL8OhsN455IeP1qEv6n"  # 네이버 API Client ID
-    client_secret = "6JUDzoXBpI"  # 네이버 API Client Secret
+    client_id = "비밀"  # 네이버 API Client ID
+    client_secret = "비밀"  # 네이버 API Client Secret
     url = "https://openapi.naver.com/v1/datalab/search"
     body = f"""
     {{

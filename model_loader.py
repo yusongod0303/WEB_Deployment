@@ -7,10 +7,12 @@ load_dotenv()
 
 def download_model_files():
     s3 = boto3.client(
+            비밀
         )
     
     bucket_name = 'lg-lastpj-bucket'
     files = {
+        비밀
     }
     
     os.makedirs('./models', exist_ok=True)
