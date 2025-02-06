@@ -16,34 +16,34 @@
 ## 디렉토리 구조 📂
  
 WEB_DEPLOYMENT
-├── CDAE.py # CDAE 기반 추천 시스템
-├── Dockerfile # Docker 설정 파일
-├── KMeans.py # KMeans 기반 추천 시스템
-├── model_loader.py # Amazon S3에서 모델 다운로드
-├── test.py # FastAPI 서버 및 메인 로직
-├── templates/ # HTML 템플릿 폴더 (디자인 관련)
-│ ├── detail.html
-│ ├── edit.html
-│ ├── favorite.html
-│ ├── login.html
-│ ├── main.html
-│ ├── myinfo.html
-│ ├── schedule.html
-│ ├── search.html
-│ ├── signup.html
-│ └── trend.html
-└── templates/static/img/ # 정적 이미지 디렉토리
-├── 003.png
-└── 006.png
+├── CDAE.py # CDAE 기반 추천 시스템  
+├── Dockerfile # Docker 설정 파일  
+├── KMeans.py # KMeans 기반 추천 시스템  
+├── model_loader.py # Amazon S3에서 모델 다운로드  
+├── test.py # FastAPI 서버 및 메인 로직  
+├── templates/ # HTML 템플릿 폴더 (디자인 관련)  
+│ ├── detail.html  
+│ ├── edit.html  
+│ ├── favorite.html  
+│ ├── login.html  
+│ ├── main.html  
+│ ├── myinfo.html  
+│ ├── schedule.html  
+│ ├── search.html  
+│ ├── signup.html  
+│ └── trend.html  
+└── templates/static/img/ # 정적 이미지 디렉토리  
+├── 003.png  
+└── 006.png  
 
 ---
 
 ## Dockerfile을 이용한 배포 🛠️
 
-1. Docker 이미지 빌드
+1. Docker 이미지 빌드  
 `docker build -t homeshop-recommender .`
 
-2. Docker 컨테이너 실행
+2. Docker 컨테이너 실행  
 `docker run -p 7777:7777 homeshop-recommender`
 
 ---
